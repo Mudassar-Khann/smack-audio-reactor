@@ -5,7 +5,7 @@ class SoundPlayer:
 
     _initialized = False
 
-    BASE_DIR = Path(__file__).resolve().parents[2]
+    BASE_DIR = Path(__file__).resolve().parents[1]
     path = BASE_DIR / "assets" / "sounds"
 
     sounds = {i.stem: str(i) for i in path.iterdir() if i.is_file()}
@@ -21,16 +21,12 @@ class SoundPlayer:
     def play(cls, hit):
         if hit:
             if hit == "soft":
-                sound = pygame.mixer.Sound(cls.sounds["anime-ahh"])
+                sound = pygame.mixer.Sound(cls.sounds["modi-ji-bkl"])
 
             elif hit == "hard":
                 sound = pygame.mixer.Sound(cls.sounds["yamate-kudesai"])
 
-            return sound.play()
-
-
-
-
+            return sound.play
 
 
 
