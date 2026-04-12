@@ -18,15 +18,16 @@ class SoundPlayer:
             cls._initialized = True
 
 
-    def play(cls, hit):
+    def play(self, hit):
         if hit:
             if hit == "soft":
-                sound = pygame.mixer.Sound(cls.sounds["modi-ji-bkl"])
+                sound = pygame.mixer.Sound(self.sounds["modi-ji-bkl"])
 
             elif hit == "hard":
-                sound = pygame.mixer.Sound(cls.sounds["yamate-kudesai"])
+                sound = pygame.mixer.Sound(self.sounds["yamate-kudesai"])
 
             return sound.play
+
 
 
 
