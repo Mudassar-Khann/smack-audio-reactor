@@ -2,14 +2,20 @@ import pygame
 from pathlib import Path
 
 class SoundPlayer:
-
     _initialized = False
 
-    BASE_DIR = Path(__file__).resolve().parents[1]
-    path = BASE_DIR / "assets" / "sounds"
+    def __init__(self):
+        SoundPlayer.init()
+        base = Path(__file__).resolve().parents[1]
+        sounds_path = base / "assets" / "sounds"
 
-    sounds = {i.stem: str(i) for i in path.iterdir() if i.is_file()}
 
+        self._sounds = {
+            f.stem: pygame.mixer.Sound(str(f))
+            for f in sounds_path.iterdir()
+            if f.suffix == ".wav"
+        }
+        print(f"Loaded {len(self._sounds)} sounds: {list(self._sounds.keys())}")
 
     @classmethod
     def init(cls):
@@ -17,17 +23,15 @@ class SoundPlayer:
             pygame.mixer.init()
             cls._initialized = True
 
-
-    def play(self, hit):
-        if hit:
-            if hit == "soft":
-                sound = pygame.mixer.Sound(self.sounds["modi-ji-bkl"])
-
-            elif hit == "hard":
-                sound = pygame.mixer.Sound(self.sounds["yamate-kudesai"])
-
-            return sound.play
-
-
-
-
+    def play(self, hit: str | None):
+        if hit is None:
+            return
+        sound_map = {
+            "soft": "modi-ji-bkl",
+            "hard": "yamate-kudesai"
+        }
+        name = sound_map.get(hit)
+        if name and name in self._sounds:
+            self._sounds[name].play()  
+        else:
+            print(f"[WARN] No sound mapped for hit='{hit}'")
