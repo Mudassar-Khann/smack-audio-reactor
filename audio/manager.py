@@ -1,20 +1,23 @@
 import random
+from config import SOUNDS
+
 
 class SoundManager:
-    def __init__(self):
-        self.random_sounds = {
-            "soft": ["modi-ji-bkl", "s2", "s3"],
-            "hard": ["yamate-kudesai", "h2", "h3"]
-        }
+    """
+    Responsible for:
+    - choosing WHICH sound to play
 
-        self.fixed_sounds = {
-            "soft": "modi-ji-bkl",
-            "hard": "yamate-kudesai"
-        }
+    DOES NOT:
+    - play sounds
+    """
+
+    def __init__(self):
+        self.random_sounds = SOUNDS["random"]
+        self.fixed_sounds = SOUNDS["fixed"]
 
         self._last_played = None
 
-    def get_random_sound(self, event: str | None):
+    def get_random_sound(self, event):
         if event is None:
             return None
 
@@ -22,6 +25,7 @@ class SoundManager:
         if not sounds:
             return None
 
+        # avoid repeating same sound
         if len(sounds) > 1:
             choices = [s for s in sounds if s != self._last_played]
         else:
@@ -30,12 +34,9 @@ class SoundManager:
         name = random.choice(choices)
         self._last_played = name
         return name
-    def get_fixed_sound(self, event: str | None):
+
+    def get_fixed_sound(self, event):
         if event is None:
             return None
 
-        sounds = self.fixed_sounds.get(event)
-        if not sounds:
-            return None
-
-        return sounds
+        return self.fixed_sounds.get(event)
