@@ -18,7 +18,7 @@ class SoundManager:
         if event is None:
             return None
 
-        sounds = self.random_sounds(event)
+        sounds = self.random_sounds.get(event)
         if not sounds:
             return None
 
@@ -34,7 +34,7 @@ class SoundManager:
         if event is None:
             return None
 
-        sounds = self.fixed_sounds(event)
+        sounds = self.fixed_sounds.get(event)
         if not sounds:
             return None
 
