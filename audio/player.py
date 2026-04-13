@@ -1,6 +1,6 @@
 import pygame
 from pathlib import Path
-
+import time
 class SoundPlayer:
     _initialized = False
 
@@ -15,7 +15,6 @@ class SoundPlayer:
             for f in sounds_path.iterdir()
             if f.suffix == ".wav"
         }
-        print(f"Loaded {len(self._sounds)} sounds: {list(self._sounds.keys())}")
 
     @classmethod
     def init(cls):
@@ -32,6 +31,7 @@ class SoundPlayer:
         }
         name = sound_map.get(hit)
         if name and name in self._sounds:
-            self._sounds[name].play()  
+            self._sounds[name].play()
         else:
             print(f"[WARN] No sound mapped for hit='{hit}'")
+
