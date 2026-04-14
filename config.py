@@ -2,21 +2,20 @@ from pathlib import Path
 import json
 import logging
 
-from queue import Queue
-
 
 class Config:
+    """
+    STATIC SYSTEM CONFIG (not user config)
+    """
 
     BASE_DIR = Path(__file__).resolve().parent
 
     SETTINGS_PATH = BASE_DIR / "config" / "settings.json"
     SOUNDS_PATH = BASE_DIR / "config" / "sounds.json"
 
-    # assets + logs
     SOUNDS_DIR = BASE_DIR / "assets" / "sounds"
     LOGS_DIR = BASE_DIR / "logs"
 
-    # audio system constants
     SAMPLE_RATE = 44100
     CHANNELS = 1
     BLOCK_SIZE = 1024
@@ -24,24 +23,23 @@ class Config:
     DEBUG = True
 
 
-def load_json_safe(path: Path, default: dict):
-
+def ensure_json(path: Path, default: dict):
+    """
+    Ensures file exists.
+    DOES NOT act as runtime config.
+    """
     if not path.exists():
-        print(f"[WARN] Missing {path}, creating default...")
+        print(f"[INIT] Creating {path}")
         path.parent.mkdir(parents=True, exist_ok=True)
 
         with open(path, "w", encoding="utf-8") as f:
             json.dump(default, f, indent=4)
 
-        return default
 
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        print(f"[ERROR] Failed to load {path}: {e}")
-        return default
-
+def load_json(path: Path):
+  
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 
 DEFAULT_SETTINGS = {
@@ -65,8 +63,13 @@ DEFAULT_SOUNDS = {
 }
 
 
-SETTINGS = load_json_safe(Config.SETTINGS_PATH, DEFAULT_SETTINGS)
-SOUNDS = load_json_safe(Config.SOUNDS_PATH, DEFAULT_SOUNDS)
+ensure_json(Config.SETTINGS_PATH, DEFAULT_SETTINGS)
+ensure_json(Config.SOUNDS_PATH, DEFAULT_SOUNDS)
+
+
+
+SETTINGS = load_json(Config.SETTINGS_PATH)
+SOUNDS = load_json(Config.SOUNDS_PATH)
 
 
 
@@ -77,5 +80,3 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
-
-
