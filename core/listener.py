@@ -19,9 +19,6 @@ class MicListener:
         """
         This runs in REAL-TIME AUDIO THREAD.
 
-        RULE:
-        - do minimal work
-        - NEVER block
         """
 
         if status:

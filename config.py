@@ -2,10 +2,12 @@ from pathlib import Path
 import json
 import logging
 
+from queue import Queue
+
 
 class Config:
 
-    BASE_DIR = Path(__file__).resolve().parents[1]
+    BASE_DIR = Path(__file__).resolve().parent
 
     SETTINGS_PATH = BASE_DIR / "config" / "settings.json"
     SOUNDS_PATH = BASE_DIR / "config" / "sounds.json"
@@ -34,7 +36,7 @@ def load_json_safe(path: Path, default: dict):
         return default
 
     try:
-        with open(path, "r") as f:
+        with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
     except Exception as e:
         print(f"[ERROR] Failed to load {path}: {e}")
@@ -45,7 +47,7 @@ def load_json_safe(path: Path, default: dict):
 DEFAULT_SETTINGS = {
     "detector": {
         "low_threshold": 0.055,
-        "high_threshold": 0.15,
+        "high_threshold": 0.10,
         "spike_threshold": 0.045,
         "cooldown": 1.5
     }
@@ -75,3 +77,5 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
+
+
