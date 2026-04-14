@@ -42,7 +42,9 @@ def worker():
     while True:
         impact = event_queue.get()
 
-        sound = manager.get_fixed_sound(impact)
+        sound = manager.get_random_sound(impact)
+        # You can use manager method to get_random and get fixed sound 
+
         player.play(sound)
 
         if Config.DEBUG:
