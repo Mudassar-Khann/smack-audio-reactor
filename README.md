@@ -6,7 +6,7 @@ A real-time Python system that detects physical impacts via microphone input and
 
 ## Demo
 
-         #### Click for demo
+Click the image for demo
 
 [![Watch Demo](assets/demo/thumbnail.png)](https://youtube.com/shorts/ttk5EsN_Xzk?feature=share)
 
