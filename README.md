@@ -22,6 +22,7 @@ Microphone → Volume Estimation → Impact Detection → Event Queue → Sound 
 
 The system is designed to be responsive, modular, and safe for real-time execution.
 
+
 ---
 
 ## Key Features
